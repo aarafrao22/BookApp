@@ -13,10 +13,10 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".FirstActivity"
+            android:name=".PdfActivity"
             android:exported="false" />
         <activity
-            android:name=".PdfActivity"
+            android:name=".FirstActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

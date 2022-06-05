@@ -27,7 +27,7 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener,View.OnClickListen
         setContentView(binding.root)
 
 
-        setSupportActionBar(binding.toolbar)
+//        setSupportActionBar(binding.toolbar)
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE)
         var pagesNo = sharedPref.getInt("page", 1)
         var nightMode:Boolean= false
@@ -37,6 +37,10 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener,View.OnClickListen
             .defaultPage(pagesNo)
             .onPageChange(this)
 //            .nightMode()
+            .swipeHorizontal(true)
+            .pageSnap(true)
+            .autoSpacing(true)
+            .pageFling(true)
             .pageFitPolicy(FitPolicy.BOTH)
             .nightMode(nightMode)
             .load()
@@ -54,7 +58,7 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener,View.OnClickListen
     override fun onClick(p0: View?) {
 
         when(p0?.id){
-            R.id.nightMode ->    onNightModeChanged(MODE_NIGHT_YES)
+//            R.id.nightMode ->    onNightModeChanged(MODE_NIGHT_YES)
         }
 
 
