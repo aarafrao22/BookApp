@@ -1,38 +1,40 @@
 package com.aarafrao.cashflowquadrant
 
 import android.content.SharedPreferences
+import android.graphics.*
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import com.aarafrao.cashflowquadrant.databinding.ActivityFirstBinding
+import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.edit
 import com.aarafrao.cashflowquadrant.databinding.ActivityPdfBinding
 import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener
 import com.github.barteksc.pdfviewer.util.FitPolicy
 
 
-class PdfActivity : AppCompatActivity(), OnPageChangeListener,View.OnClickListener {
+class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListener {
 
     private lateinit var binding: ActivityPdfBinding
     private lateinit var sharedPref: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
+    var nightMode: Boolean = false
+    private lateinit var nightBtn: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPdfBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        nightBtn = findViewById(R.id.nightMode)
+
 
 //        setSupportActionBar(binding.toolbar)
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE)
         var pagesNo = sharedPref.getInt("page", 1)
-        var nightMode:Boolean= false
 
-//        if ()
+        binding.nightMode.setOnClickListener(this)
+
         binding.pdfView.fromAsset("cashflow1.pdf")
             .defaultPage(pagesNo)
             .onPageChange(this)
@@ -45,7 +47,6 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener,View.OnClickListen
             .nightMode(nightMode)
             .load()
 
-
     }
 
 
@@ -57,8 +58,20 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener,View.OnClickListen
 
     override fun onClick(p0: View?) {
 
-        when(p0?.id){
-//            R.id.nightMode ->    onNightModeChanged(MODE_NIGHT_YES)
+        when (p0?.id) {
+            R.id.nightMode ->
+                // Check PDF night mode is on or off
+                if (nightMode) {
+                    // Turn off PDF night mode
+                    binding.pdfView.setNightMode(false)
+                    binding.pdfView.requestLayout()
+                    nightMode = false
+                } else {
+                    // Turn on PDF Night Mode
+                    binding.pdfView.setNightMode(true)
+                    nightMode = true
+                    binding.pdfView.requestLayout()
+                }
         }
 
 
