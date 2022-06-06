@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.aarafrao.cashflowquadrant.databinding.ActivityPdfBinding
 import com.github.barteksc.pdfviewer.PDFView
@@ -20,6 +21,8 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
     private lateinit var editor: SharedPreferences.Editor
     var nightMode: Boolean = false
     private lateinit var nightBtn: ImageView
+    private lateinit var bookmark: ImageView
+    private var pg: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,7 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
         setContentView(binding.root)
 
         nightBtn = findViewById(R.id.nightMode)
+        bookmark = findViewById(R.id.bookmark)
 
 
 //        setSupportActionBar(binding.toolbar)
@@ -34,6 +38,7 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
         var pagesNo = sharedPref.getInt("page", 1)
 
         binding.nightMode.setOnClickListener(this)
+        binding.bookmark.setOnClickListener(this)
 
         binding.pdfView.fromAsset("cashflow1.pdf")
             .defaultPage(pagesNo)
@@ -55,6 +60,14 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
         editor.putInt("page", page)
         editor.apply()
     }
+    fun addToBookmark(){
+        editor = sharedPref.edit()
+        pg = binding.pdfView.currentPage
+        editor.putInt("bookmark", pg)
+        Toast.makeText(this, "pageNumber "+pg+" Added to Bookmark", Toast.LENGTH_SHORT).show()
+        bookmark.setImageResource(R.drawable.ic_bookmark)
+
+    }
 
     override fun onClick(p0: View?) {
 
@@ -66,12 +79,20 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
                     binding.pdfView.setNightMode(false)
                     binding.pdfView.requestLayout()
                     nightMode = false
+                    nightBtn.setImageResource(R.drawable.ic_moon)
+                    Toast.makeText(this, "Day Mode Activated", Toast.LENGTH_SHORT).show()
                 } else {
                     // Turn on PDF Night Mode
                     binding.pdfView.setNightMode(true)
                     nightMode = true
                     binding.pdfView.requestLayout()
+                    nightBtn.setImageResource(R.drawable.ic_moonfilled)
+                    Toast.makeText(this, "Night Mode Activated", Toast.LENGTH_SHORT).show()
                 }
+
+            R.id.bookmark ->
+                addToBookmark()
+
         }
 
 
