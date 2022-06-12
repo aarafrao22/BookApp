@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="10">
+            android:layout_weight="1">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -42,11 +42,11 @@
                         app:tint="@color/white" />
 
                     <ImageView
-                        android:id="@+id/bookmark"
+                        android:id="@+id/nightMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:src="@drawable/ic_bookmark2"
+                        android:src="@drawable/ic_moon"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -54,13 +54,13 @@
 
 
                     <ImageView
-                        android:id="@+id/nightMode"
+                        android:id="@+id/page"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:src="@drawable/ic_moon"
+                        android:src="@drawable/ic_page"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/bookmark"
+                        app:layout_constraintEnd_toStartOf="@+id/nightMode"
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/white" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

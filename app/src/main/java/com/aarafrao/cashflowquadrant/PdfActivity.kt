@@ -4,12 +4,12 @@ import android.content.SharedPreferences
 import android.graphics.*
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.aarafrao.cashflowquadrant.databinding.ActivityPdfBinding
-import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener
 import com.github.barteksc.pdfviewer.util.FitPolicy
 
@@ -21,24 +21,27 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
     private lateinit var editor: SharedPreferences.Editor
     var nightMode: Boolean = false
     private lateinit var nightBtn: ImageView
-    private lateinit var bookmark: ImageView
+    private lateinit var page: ImageView
     private var pg: Int = 0
+
+    //    private val gson: Gson? = null
+    private var matchedQuestionPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPdfBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         nightBtn = findViewById(R.id.nightMode)
-        bookmark = findViewById(R.id.bookmark)
+        page = findViewById(R.id.page)
 
 
 //        setSupportActionBar(binding.toolbar)
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE)
         var pagesNo = sharedPref.getInt("page", 1)
-
         binding.nightMode.setOnClickListener(this)
-        binding.bookmark.setOnClickListener(this)
+        binding.page.setOnClickListener(this)
 
         binding.pdfView.fromAsset("cashflow1.pdf")
             .defaultPage(pagesNo)
@@ -47,6 +50,7 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
             .swipeHorizontal(true)
             .pageSnap(true)
             .autoSpacing(true)
+
             .pageFling(true)
             .pageFitPolicy(FitPolicy.BOTH)
             .nightMode(nightMode)
@@ -59,14 +63,8 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
         editor = sharedPref.edit()
         editor.putInt("page", page)
         editor.apply()
-    }
-    fun addToBookmark(){
-        editor = sharedPref.edit()
-        pg = binding.pdfView.currentPage
-        editor.putInt("bookmark", pg)
-        Toast.makeText(this, "pageNumber "+pg+" Added to Bookmark", Toast.LENGTH_SHORT).show()
-        bookmark.setImageResource(R.drawable.ic_bookmark)
 
+        Toast.makeText(this@PdfActivity, "$page of $pageCount", Toast.LENGTH_SHORT).show()
     }
 
     override fun onClick(p0: View?) {
@@ -90,11 +88,59 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
                     Toast.makeText(this, "Night Mode Activated", Toast.LENGTH_SHORT).show()
                 }
 
-            R.id.bookmark ->
-                addToBookmark()
-
+            R.id.page ->
+                showCustomDialog()
         }
 
+
+    }
+
+    private fun showCustomDialog() {
+
+        val builderSingle = AlertDialog.Builder(this@PdfActivity)
+        builderSingle.setTitle("Chapters")
+        val arrayAdapter =
+            ArrayAdapter<String>(this@PdfActivity, R.layout.itemlist, R.id.textView1)
+        arrayAdapter.add("Why Don’t You Get a Job?")
+        arrayAdapter.add("Different Quadrants, Different People")
+        arrayAdapter.add("Security over Freedom")
+        arrayAdapter.add("The Three Kinds of Business Systems")
+        arrayAdapter.add("The Five Levels of Investors")
+        arrayAdapter.add("You Cannot See Money with Your Eyes")
+        arrayAdapter.add("Becoming Who You Are")
+        arrayAdapter.add("How Do I Get Rich?")
+        arrayAdapter.add("Be the Bank, Not the Banker")
+        arrayAdapter.add("Take Baby Steps")
+        arrayAdapter.add("Steps to Find Your Financial Fast Track")
+        arrayAdapter.add("Step 1: Time to Mind Own Business")
+        arrayAdapter.add("Step 2: Take Control of Your Cash Flow")
+        arrayAdapter.add("Step 3: Diff BW Risk and Risky")
+        arrayAdapter.add("Step 4: What Kind of Investor You r?")
+        arrayAdapter.add("Step 5: Seek Mentors")
+        arrayAdapter.add("Step 6: Disappointments, Your Strength")
+        arrayAdapter.add("Step 7: The Power of Faith")
+        arrayAdapter.add("In Summary")
+
+        builderSingle.setNegativeButton(
+            "cancel"
+        ) { dialog, which -> dialog.dismiss() }
+
+        builderSingle.setAdapter(
+            arrayAdapter
+        ) { dialog, which ->
+            //TODO: Logic to send on chapter
+            val strName = arrayAdapter.getItem(which)
+            Toast.makeText(this@PdfActivity, "$strName", Toast.LENGTH_SHORT)
+                .show()
+
+//            shiftChapters(strName)
+        }
+        builderSingle.show()
+    }
+
+    private fun shiftChapters(chapterName: String) {
+
+//        pagesNo = chapterName
 
     }
 
