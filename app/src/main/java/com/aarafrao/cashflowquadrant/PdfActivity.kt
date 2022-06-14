@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.aarafrao.cashflowquadrant.databinding.ActivityPdfBinding
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener
+import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
 import com.github.barteksc.pdfviewer.util.FitPolicy
 
 
@@ -49,7 +50,7 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
 //            .nightMode()
             .swipeHorizontal(true)
             .pageSnap(true)
-            .scrollHandle(null)
+            .scrollHandle(DefaultScrollHandle(this,true))
             .autoSpacing(true)
             .enableAnnotationRendering(false)
             .pageFling(true)
