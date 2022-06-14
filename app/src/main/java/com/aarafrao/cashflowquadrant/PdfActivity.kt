@@ -66,7 +66,6 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
         editor.putInt("page", page)
         editor.apply()
 
-        Toast.makeText(this@PdfActivity, "$page of $pageCount", Toast.LENGTH_SHORT).show()
     }
 
     override fun onClick(p0: View?) {
