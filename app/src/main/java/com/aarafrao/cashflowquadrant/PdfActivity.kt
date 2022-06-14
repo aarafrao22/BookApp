@@ -49,8 +49,9 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
 //            .nightMode()
             .swipeHorizontal(true)
             .pageSnap(true)
+            .scrollHandle(null)
             .autoSpacing(true)
-
+            .enableAnnotationRendering(false)
             .pageFling(true)
             .pageFitPolicy(FitPolicy.BOTH)
             .nightMode(nightMode)
@@ -71,7 +72,6 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
 
         when (p0?.id) {
             R.id.nightMode ->
-                // Check PDF night mode is on or off
                 if (nightMode) {
                     // Turn off PDF night mode
                     binding.pdfView.setNightMode(false)
@@ -80,7 +80,6 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
                     nightBtn.setImageResource(R.drawable.ic_moon)
                     Toast.makeText(this, "Day Mode Activated", Toast.LENGTH_SHORT).show()
                 } else {
-                    // Turn on PDF Night Mode
                     binding.pdfView.setNightMode(true)
                     nightMode = true
                     binding.pdfView.requestLayout()
@@ -99,8 +98,7 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
 
         val builderSingle = AlertDialog.Builder(this@PdfActivity)
         builderSingle.setTitle("Chapters")
-        val arrayAdapter =
-            ArrayAdapter<String>(this@PdfActivity, R.layout.itemlist, R.id.textView1)
+        val arrayAdapter = ArrayAdapter<String>(this@PdfActivity, R.layout.itemlist, R.id.textView1)
         arrayAdapter.add("Why Don’t You Get a Job?")
         arrayAdapter.add("Different Quadrants, Different People")
         arrayAdapter.add("Security over Freedom")
@@ -121,27 +119,21 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
         arrayAdapter.add("Step 7: The Power of Faith")
         arrayAdapter.add("In Summary")
 
-        builderSingle.setNegativeButton(
-            "cancel"
-        ) { dialog, which -> dialog.dismiss() }
+        builderSingle.setNegativeButton("cancel") { dialog, which ->
+            dialog.dismiss()
+        }
 
-        builderSingle.setAdapter(
-            arrayAdapter
-        ) { dialog, which ->
+        builderSingle.setAdapter(arrayAdapter) { dialog, which ->
             //TODO: Logic to send on chapter
-            val strName = arrayAdapter.getItem(which)
-            Toast.makeText(this@PdfActivity, "$strName", Toast.LENGTH_SHORT)
-                .show()
 
-//            shiftChapters(strName)
+            val strName = arrayAdapter.getItem(which)
+            Toast.makeText(this@PdfActivity, "$strName", Toast.LENGTH_SHORT).show()
+            shiftChapters(arrayAdapter.getPosition(strName).toString())
         }
         builderSingle.show()
     }
 
     private fun shiftChapters(chapterName: String) {
 
-//        pagesNo = chapterName
-
     }
-
 }
