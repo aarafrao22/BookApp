@@ -50,7 +50,7 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
 //            .nightMode()
             .swipeHorizontal(true)
             .pageSnap(true)
-            .scrollHandle(DefaultScrollHandle(this,true))
+            .scrollHandle(DefaultScrollHandle(this, true))
             .autoSpacing(true)
             .enableAnnotationRendering(false)
             .pageFling(true)
@@ -109,7 +109,6 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
         arrayAdapter.add("How Do I Get Rich?")
         arrayAdapter.add("Be the Bank, Not the Banker")
         arrayAdapter.add("Take Baby Steps")
-        arrayAdapter.add("Steps to Find Your Financial Fast Track")
         arrayAdapter.add("Step 1: Time to Mind Own Business")
         arrayAdapter.add("Step 2: Take Control of Your Cash Flow")
         arrayAdapter.add("Step 3: Diff BW Risk and Risky")
@@ -134,6 +133,28 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
     }
 
     private fun shiftChapters(chapterName: String) {
+        when (chapterName) {
+            "Why Don’t You Get a Job?" ->                   binding.pdfView.jumpTo(11, true)
+            "Different Quadrants, Different People" ->      binding.pdfView.jumpTo(23, true)
+            "Security over Freedom" ->                      binding.pdfView.jumpTo(57, true)
+            "The Three Kinds of Business Systems" ->        binding.pdfView.jumpTo(81, true)
+            "The Five Levels of Investors" ->               binding.pdfView.jumpTo(95, true)
+            "You Cannot See Money with Your Eyes" ->        binding.pdfView.jumpTo(119, true)
+            "Becoming Who You Are" ->                       binding.pdfView.jumpTo(149, true)
+            "How Do I Get Rich?" ->                         binding.pdfView.jumpTo(165, true)
+            "Be the Bank, Not the Banker" ->                binding.pdfView.jumpTo(187, true)
+            "Take Baby Steps" ->                            binding.pdfView.jumpTo(217, true)
+             "Step 1: Time to Mind Own Business" ->         binding.pdfView.jumpTo(233, true)
+            "Step 2: Take Control of Your Cash Flow" ->     binding.pdfView.jumpTo(239, true)
+            "Step 3: Diff BW Risk and Risky" ->             binding.pdfView.jumpTo(247, true)
+            "Step 4: What Kind of Investor You r?" ->       binding.pdfView.jumpTo(251, true)
+            "Step 5: Seek Mentors" ->                       binding.pdfView.jumpTo(259, true)
+            "Step 6: Disappointments, Your Strength" ->     binding.pdfView.jumpTo(269, true)
+            "Step 7: The Power of Faith" ->                 binding.pdfView.jumpTo(275, true)
+            "In Summary" ->                                 binding.pdfView.jumpTo(281, true)
 
+        }
     }
+
+
 }
