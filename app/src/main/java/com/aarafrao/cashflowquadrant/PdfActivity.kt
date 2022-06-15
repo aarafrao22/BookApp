@@ -127,31 +127,31 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
 
             val strName = arrayAdapter.getItem(which)
             Toast.makeText(this@PdfActivity, "$strName", Toast.LENGTH_SHORT).show()
-            shiftChapters(arrayAdapter.getPosition(strName).toString())
+            shiftChapters(strName!!)
         }
         builderSingle.show()
     }
 
     private fun shiftChapters(chapterName: String) {
         when (chapterName) {
-            "Why Don’t You Get a Job?" ->                   binding.pdfView.jumpTo(11, true)
-            "Different Quadrants, Different People" ->      binding.pdfView.jumpTo(23, true)
-            "Security over Freedom" ->                      binding.pdfView.jumpTo(57, true)
-            "The Three Kinds of Business Systems" ->        binding.pdfView.jumpTo(81, true)
-            "The Five Levels of Investors" ->               binding.pdfView.jumpTo(95, true)
-            "You Cannot See Money with Your Eyes" ->        binding.pdfView.jumpTo(119, true)
-            "Becoming Who You Are" ->                       binding.pdfView.jumpTo(149, true)
-            "How Do I Get Rich?" ->                         binding.pdfView.jumpTo(165, true)
-            "Be the Bank, Not the Banker" ->                binding.pdfView.jumpTo(187, true)
-            "Take Baby Steps" ->                            binding.pdfView.jumpTo(217, true)
-             "Step 1: Time to Mind Own Business" ->         binding.pdfView.jumpTo(233, true)
-            "Step 2: Take Control of Your Cash Flow" ->     binding.pdfView.jumpTo(239, true)
-            "Step 3: Diff BW Risk and Risky" ->             binding.pdfView.jumpTo(247, true)
-            "Step 4: What Kind of Investor You r?" ->       binding.pdfView.jumpTo(251, true)
-            "Step 5: Seek Mentors" ->                       binding.pdfView.jumpTo(259, true)
-            "Step 6: Disappointments, Your Strength" ->     binding.pdfView.jumpTo(269, true)
-            "Step 7: The Power of Faith" ->                 binding.pdfView.jumpTo(275, true)
-            "In Summary" ->                                 binding.pdfView.jumpTo(281, true)
+            "Why Don’t You Get a Job?" ->                   binding.pdfView.jumpTo(39, true)
+            "Different Quadrants, Different People" ->      binding.pdfView.jumpTo(23+28, true)
+            "Security over Freedom" ->                      binding.pdfView.jumpTo(57+28, true)
+            "The Three Kinds of Business Systems" ->        binding.pdfView.jumpTo(81+28, true)
+            "The Five Levels of Investors" ->               binding.pdfView.jumpTo(95+28, true)
+            "You Cannot See Money with Your Eyes" ->        binding.pdfView.jumpTo(119+28, true)
+            "Becoming Who You Are" ->                       binding.pdfView.jumpTo(149+28, true)
+            "How Do I Get Rich?" ->                         binding.pdfView.jumpTo(165+28, true)
+            "Be the Bank, Not the Banker" ->                binding.pdfView.jumpTo(187+28, true)
+            "Take Baby Steps" ->                            binding.pdfView.jumpTo(217+28, true)
+             "Step 1: Time to Mind Own Business" ->         binding.pdfView.jumpTo(233+28, true)
+            "Step 2: Take Control of Your Cash Flow" ->     binding.pdfView.jumpTo(239+28, true)
+            "Step 3: Diff BW Risk and Risky" ->             binding.pdfView.jumpTo(247+28, true)
+            "Step 4: What Kind of Investor You r?" ->       binding.pdfView.jumpTo(251+28, true)
+            "Step 5: Seek Mentors" ->                       binding.pdfView.jumpTo(259+28, true)
+            "Step 6: Disappointments, Your Strength" ->     binding.pdfView.jumpTo(269+28, true)
+            "Step 7: The Power of Faith" ->                 binding.pdfView.jumpTo(275+28, true)
+            "In Summary" ->                                 binding.pdfView.jumpTo(281+28, true)
 
         }
     }
