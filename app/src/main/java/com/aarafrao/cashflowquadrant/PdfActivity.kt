@@ -1,16 +1,10 @@
 package com.aarafrao.cashflowquadrant
 
 import android.app.ActionBar
-import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.*
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.text.format.DateFormat
 import android.view.View
-import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
@@ -20,39 +14,33 @@ import com.aarafrao.cashflowquadrant.databinding.ActivityPdfBinding
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
 import com.github.barteksc.pdfviewer.util.FitPolicy
-import java.io.File
-import java.io.FileOutputStream
-import java.util.*
 
 
 class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListener {
 
     private lateinit var binding: ActivityPdfBinding
     private lateinit var sharedPref: SharedPreferences
+
+    private var list: List<Int>? = null;
     private lateinit var editor: SharedPreferences.Editor
     var nightMode: Boolean = false
+    var position: Int = 0
+    private var bookmarksList: List<BookmarkModel>? = null
+
     private lateinit var nightBtn: ImageView
     private lateinit var page: ImageView
     private var pg: Int = 0
+    var isTrue = true
 
-    //    private val gson: Gson? = null
-    private var matchedQuestionPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (Build.VERSION.SDK_INT < 16) {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        } else {
-            val decorView = window.decorView
-            val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
-            decorView.systemUiVisibility = uiOptions
-            val actionBar: ActionBar? = actionBar
-            actionBar?.hide()
-        }
+        val decorView = window.decorView
+        val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+        decorView.systemUiVisibility = uiOptions
+        val actionBar: ActionBar? = actionBar
+        actionBar?.hide()
 
         binding = ActivityPdfBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -60,14 +48,13 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
 
         nightBtn = findViewById(R.id.nightMode)
         page = findViewById(R.id.page)
-
+        binding.fab.setOnClickListener(this)
 
         setSupportActionBar(binding.toolbar)
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE)
-        var pagesNo = sharedPref.getInt("page", 1)
+        val pagesNo = sharedPref.getInt("page", 1)
         binding.nightMode.setOnClickListener(this)
         binding.page.setOnClickListener(this)
-//        binding.screenshot.setOnClickListener(this)
 
         binding.pdfView.fromAsset("cashflow1.pdf")
             .defaultPage(pagesNo)
@@ -84,8 +71,9 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
 
     }
 
-
     override fun onPageChanged(page: Int, pageCount: Int) {
+        isTrue = true
+        binding.fab.setImageResource(R.drawable.ic_bookmark2)
         editor = sharedPref.edit()
         editor.putInt("page", page)
         editor.apply()
@@ -116,14 +104,25 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
             R.id.page ->
                 showCustomDialog()
 
-//            R.id.screenshot ->{
-//            }
+            R.id.fab -> {
+                if (isTrue) {
+                    binding.fab.setImageResource(R.drawable.ic_bookmark)
+                    Toast.makeText(this, "Added to Bookmark", Toast.LENGTH_SHORT).show()
+                    var itemBookmark:Int  = sharedPref.getInt("page",1)
+                    list?.toMutableList()?.add(itemBookmark)
+                    isTrue = false
+                } else {
+                    Toast.makeText(this, "Removed to Bookmark", Toast.LENGTH_SHORT).show()
+                    binding.fab.setImageResource(R.drawable.ic_bookmark)
+                    editor.remove("page")
+                    isTrue = false
+                }
+            }
 
         }
 
 
     }
-
 
 
     private fun showCustomDialog() {
@@ -166,25 +165,26 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
 
     private fun shiftChapters(chapterName: String) {
         when (chapterName) {
-            "Why Don’t You Get a Job?" ->                   binding.pdfView.jumpTo(39, true)
-            "Different Quadrants, Different People" ->      binding.pdfView.jumpTo(23+28, true)
-            "Security over Freedom" ->                      binding.pdfView.jumpTo(57+28, true)
-            "The Three Kinds of Business Systems" ->        binding.pdfView.jumpTo(81+28, true)
-            "The Five Levels of Investors" ->               binding.pdfView.jumpTo(95+28, true)
-            "You Cannot See Money with Your Eyes" ->        binding.pdfView.jumpTo(119+28, true)
-            "Becoming Who You Are" ->                       binding.pdfView.jumpTo(149+28, true)
-            "How Do I Get Rich?" ->                         binding.pdfView.jumpTo(165+28, true)
-            "Be the Bank, Not the Banker" ->                binding.pdfView.jumpTo(187+28, true)
-            "Take Baby Steps" ->                            binding.pdfView.jumpTo(217+28, true)
-             "Step 1: Time to Mind Own Business" ->         binding.pdfView.jumpTo(233+28, true)
-            "Step 2: Take Control of Your Cash Flow" ->     binding.pdfView.jumpTo(239+28, true)
-            "Step 3: Diff BW Risk and Risky" ->             binding.pdfView.jumpTo(247+28, true)
-            "Step 4: What Kind of Investor You r?" ->       binding.pdfView.jumpTo(251+28, true)
-            "Step 5: Seek Mentors" ->                       binding.pdfView.jumpTo(259+28, true)
-            "Step 6: Disappointments, Your Strength" ->     binding.pdfView.jumpTo(269+28, true)
-            "Step 7: The Power of Faith" ->                 binding.pdfView.jumpTo(275+28, true)
-            "In Summary" ->                                 binding.pdfView.jumpTo(281+28, true)
+            "Why Don’t You Get a Job?" -> binding.pdfView.jumpTo(39, true)
+            "Different Quadrants, Different People" -> binding.pdfView.jumpTo(23 + 28, true)
+            "Security over Freedom" -> binding.pdfView.jumpTo(57 + 28, true)
+            "The Three Kinds of Business Systems" -> binding.pdfView.jumpTo(81 + 28, true)
+            "The Five Levels of Investors" -> binding.pdfView.jumpTo(95 + 28, true)
+            "You Cannot See Money with Your Eyes" -> binding.pdfView.jumpTo(119 + 28, true)
+            "Becoming Who You Are" -> binding.pdfView.jumpTo(149 + 28, true)
+            "How Do I Get Rich?" -> binding.pdfView.jumpTo(165 + 28, true)
+            "Be the Bank, Not the Banker" -> binding.pdfView.jumpTo(187 + 28, true)
+            "Take Baby Steps" -> binding.pdfView.jumpTo(217 + 28, true)
+            "Step 1: Time to Mind Own Business" -> binding.pdfView.jumpTo(233 + 28, true)
+            "Step 2: Take Control of Your Cash Flow" -> binding.pdfView.jumpTo(239 + 28, true)
+            "Step 3: Diff BW Risk and Risky" -> binding.pdfView.jumpTo(247 + 28, true)
+            "Step 4: What Kind of Investor You r?" -> binding.pdfView.jumpTo(251 + 28, true)
+            "Step 5: Seek Mentors" -> binding.pdfView.jumpTo(259 + 28, true)
+            "Step 6: Disappointments, Your Strength" -> binding.pdfView.jumpTo(269 + 28, true)
+            "Step 7: The Power of Faith" -> binding.pdfView.jumpTo(275 + 28, true)
+            "In Summary" -> binding.pdfView.jumpTo(281 + 28, true)
 
         }
     }
+
 }

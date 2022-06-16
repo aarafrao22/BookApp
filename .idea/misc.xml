@@ -3,13 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/CashflowQuadrant/app/src/main/res/drawable/category.xml" value="0.111" />
         <entry key="..\:/CashflowQuadrant/app/src/main/res/drawable/ic_bookmark.xml" value="0.2085" />
+        <entry key="..\:/CashflowQuadrant/app/src/main/res/drawable/ic_bookmark2.xml" value="0.1365" />
         <entry key="..\:/CashflowQuadrant/app/src/main/res/drawable/ic_moon.xml" value="0.2085" />
         <entry key="..\:/CashflowQuadrant/app/src/main/res/drawable/ic_moonfilled.xml" value="0.2085" />
         <entry key="..\:/CashflowQuadrant/app/src/main/res/drawable/itembg.xml" value="0.2085" />
+        <entry key="..\:/CashflowQuadrant/app/src/main/res/drawable/roundedborders.xml" value="0.111" />
+        <entry key="..\:/CashflowQuadrant/app/src/main/res/layout/activity_bookmark.xml" value="0.23867753623188406" />
         <entry key="..\:/CashflowQuadrant/app/src/main/res/layout/activity_first.xml" value="0.25" />
         <entry key="..\:/CashflowQuadrant/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/CashflowQuadrant/app/src/main/res/layout/activity_pdf.xml" value="0.25" />
+        <entry key="..\:/CashflowQuadrant/app/src/main/res/layout/bookmarkitem.xml" value="0.25" />
         <entry key="..\:/CashflowQuadrant/app/src/main/res/layout/itemlist.xml" value="0.25" />
         <entry key="..\:/CashflowQuadrant/app/src/main/res/menu/chapters.xml" value="0.26875" />
       </map>

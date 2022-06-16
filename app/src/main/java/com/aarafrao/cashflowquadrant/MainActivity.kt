@@ -10,14 +10,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val handler = Handler()
-        val runnableCode: Runnable = object : Runnable {
-            override fun run() {
-                val intent: Intent = Intent(this@MainActivity, FirstActivity::class.java)
-                startActivity(intent)
-                handler.postDelayed(this, 3000)
-            }
-        }
-        handler.post(runnableCode)
+        val SPLASH_DISPLAY_LENGTH: Long = 2200
+        Handler().postDelayed({
+            val mainIntent = Intent(this@MainActivity, FirstActivity::class.java)
+            startActivity(mainIntent)
+
+        }, SPLASH_DISPLAY_LENGTH)
+
     }
 }
