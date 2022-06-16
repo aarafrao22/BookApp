@@ -7,7 +7,6 @@ import com.aarafrao.cashflowquadrant.BookmarkAdapter.*
 
 class BookmarkAdapter() : RecyclerView.Adapter<VH>() {
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
