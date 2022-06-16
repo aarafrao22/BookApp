@@ -1,9 +1,16 @@
 package com.aarafrao.cashflowquadrant
 
+import android.app.ActionBar
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.*
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.text.format.DateFormat
 import android.view.View
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
@@ -13,6 +20,9 @@ import com.aarafrao.cashflowquadrant.databinding.ActivityPdfBinding
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
 import com.github.barteksc.pdfviewer.util.FitPolicy
+import java.io.File
+import java.io.FileOutputStream
+import java.util.*
 
 
 class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListener {
@@ -30,6 +40,20 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (Build.VERSION.SDK_INT < 16) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        } else {
+            val decorView = window.decorView
+            val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+            decorView.systemUiVisibility = uiOptions
+            val actionBar: ActionBar? = actionBar
+            actionBar?.hide()
+        }
+
         binding = ActivityPdfBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -38,16 +62,16 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
         page = findViewById(R.id.page)
 
 
-//        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(binding.toolbar)
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE)
         var pagesNo = sharedPref.getInt("page", 1)
         binding.nightMode.setOnClickListener(this)
         binding.page.setOnClickListener(this)
+//        binding.screenshot.setOnClickListener(this)
 
         binding.pdfView.fromAsset("cashflow1.pdf")
             .defaultPage(pagesNo)
             .onPageChange(this)
-//            .nightMode()
             .swipeHorizontal(true)
             .pageSnap(true)
             .scrollHandle(DefaultScrollHandle(this, true))
@@ -77,11 +101,13 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
                     binding.pdfView.setNightMode(false)
                     binding.pdfView.requestLayout()
                     nightMode = false
+                    binding.mainBg.setBackgroundColor(Color.WHITE)
                     nightBtn.setImageResource(R.drawable.ic_moon)
                     Toast.makeText(this, "Day Mode Activated", Toast.LENGTH_SHORT).show()
                 } else {
                     binding.pdfView.setNightMode(true)
                     nightMode = true
+                    binding.mainBg.setBackgroundColor(Color.BLACK)
                     binding.pdfView.requestLayout()
                     nightBtn.setImageResource(R.drawable.ic_moonfilled)
                     Toast.makeText(this, "Night Mode Activated", Toast.LENGTH_SHORT).show()
@@ -89,10 +115,16 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
 
             R.id.page ->
                 showCustomDialog()
+
+//            R.id.screenshot ->{
+//            }
+
         }
 
 
     }
+
+
 
     private fun showCustomDialog() {
 
@@ -155,6 +187,4 @@ class PdfActivity : AppCompatActivity(), OnPageChangeListener, View.OnClickListe
 
         }
     }
-
-
 }

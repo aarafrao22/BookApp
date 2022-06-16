@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/mainBg"
     android:layout_height="match_parent"
     tools:context=".PdfActivity">
 
@@ -63,6 +64,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/nightMode"
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/white" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.appcompat.widget.Toolbar>
